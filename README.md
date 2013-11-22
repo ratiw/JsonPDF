@@ -1,7 +1,7 @@
+JsonPDF
+=======
 
 __JsonPDF__ is a wrapper class for [FPDF](http://www.fpdf.org) to allow creating PDF document from [JSON](http://en.wikipedia.org/wiki/JSON).
-
-This class make use of <https://github.com/xroot/laravel-fpdf>. You can see more info about FPDF port to laravel as well.
 
 
 ##Installation
