@@ -1,5 +1,3 @@
-JsonPDF
-=======
 
 __JsonPDF__ is a wrapper class for [FPDF](http://www.fpdf.org) to allow creating PDF document from [JSON](http://en.wikipedia.org/wiki/JSON).
 
@@ -106,26 +104,7 @@ The following example shows the `username` data embedded in the text property. T
         "username": "Rati"
     ]
 
-__properties__      
-
-- `x` _(optional)_     
-
-- `y` _(optional)_       
-    starting position of the line.  
-
-- `font` _(optional)_    
-
-- `font-style` _(optional)_     
-
-- `font-size` _(optional)_      
-
-- `text-color` _(optional)_    
-
-- `draw-color` _(optional)_    
-
-- `fill-color` _(optional)_    
-
-- `line-width` _(optional)_    
+####Additional properties      
 
 - `align` _(optional)_    
 
@@ -323,4 +302,3 @@ ddd
             ["country": "Denmark", "capital": "Copenhagen", "area": "43,094", "pop": "5,295"]
         ]
     }
-
