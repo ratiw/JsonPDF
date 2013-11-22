@@ -2,7 +2,7 @@
 
 class JsonPDF extends Fpdf
 {
-	protected $settings     = null;
+    protected $settings     = null;
 
     protected $header       = null;
     
