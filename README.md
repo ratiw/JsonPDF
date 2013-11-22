@@ -1,17 +1,49 @@
-JsonPDF
-=======
 
-__JsonPDF__ is a wrapper class for [FPDF](http://www.fpdf.org) to allow creating PDF document from [JSON](http://en.wikipedia.org/wiki/JSON).
+__JsonPDF__ is a wrapper class for [FPDF](http://www.fpdf.org) to allow creating PDF document from [JSON](http://en.wikipedia.org/wiki/JSON) data.
 
 
-##Installation
-aaa
+##Install using Composer
+Just add the requirement to you `composer.json` file.
+
+    {
+        "require": {
+            "ratiw/jsonpdf": "dev-master"
+        }
+    }
 
 
 ----
 ##Example
 
-bbbb
+    <?php
+        require "vendor/autoload.php";
+        
+        // This part usually comes from file or http request
+        $data = array(
+            'body' => array(
+                array(
+                    'type' => 'text',
+                    'width' => 40,
+                    'height' => 10,
+                    'text' => 'Hello World!',
+                    'font' => 'Arial',
+                    'font-style' => 'B',
+                    'font-size' => 16,
+                ),
+                array(
+                    'type' => 'text',
+                    'text' => 'Hi, there!',
+                ),
+            ),
+        );
+        
+        // The main code is here
+        $pdf = new ratiw\JsonPDF\JsonPDF('P', 'mm', 'A4');
+        $pdf->make(json_encode($data));
+        $pdf->render();
+    ?>
+
+See more examples in the `examples` direcoty.
 
 ----
 ##JSON data structure
