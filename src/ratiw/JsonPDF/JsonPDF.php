@@ -430,9 +430,9 @@ class JsonPDF extends Fpdf
         $this->Cell($totalWidth, 0, '', 'T');
     }
     
-    public function render()
+    public function render($name = '', $dest = '')
     {
-        $this->Output();
+        $this->Output($name, $dest);
         exit;
     }
 
