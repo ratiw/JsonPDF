@@ -46,12 +46,6 @@ class JsonPDF extends Fpdf
         isset($settgins->{'right-margin'}) and $this->SetRightMargin($settings->{'right-margin'});
         // bottomMargin is not used in FPDF, see SetMargins() documentation.
 
-        // header height
-        if ( ! isset($settings->{'header-height'}))
-        { 
-            $settings->{'header-height'} = isset($settings->{'left-margin'}) ? $settings->{'left-margin'} : $this->lMargin;
-        }
-        
         // AutoPageBreak
         if (isset($settings->{'auto-pagebreak'}))
         {       
@@ -446,11 +440,13 @@ class JsonPDF extends Fpdf
     {
         $this->resetDrawing();
         $this->renderSection($this->header);
-    }
+        isset($this->settings->{'header-height'}) and $this->SetY($this->settings->{'header-height'});
+   }
     
     function Footer()
     {
         $this->resetDrawing();
+        isset($this->settings->{'auto-pagebreak-margin'}) and $this->SetY(-$this->settings->{'auto-pagebreak-margin'});
         $this->renderSection($this->footer);
     }
     
