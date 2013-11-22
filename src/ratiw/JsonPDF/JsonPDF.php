@@ -1,7 +1,5 @@
 <?php namespace ratiw\JsonPDF;
 
-// use Anouar\Fpdf\Fpdf;
-
 class JsonPDF extends Fpdf
 {
 	protected $settings     = null;
