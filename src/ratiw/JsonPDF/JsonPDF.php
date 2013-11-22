@@ -37,25 +37,31 @@ class JsonPDF extends Fpdf
     public function init($settings)
     {
         // Number of Pages Alias
-        isset($settings->aliasNbPages) || $settings->aliasNbPages = '{nb}';
-        $this->AliasNbPages($settings->aliasNbPages);
+        isset($settings->{'alias-nb-pages'}) || $settings->{'alias-nb-pages'} = '{nb}';
+        $this->AliasNbPages($settings->{'alias-nb-pages'});
         
         // margins
-        isset($settgins->leftMargin)  and $this->SetLeftMargin($settings->leftMargin);
-        isset($settgins->topMargin)   and $this->SetTopMargin($settings->topMargin);
-        isset($settgins->rightMargin) and $this->SetRightMargin($settings->rightMargin);
+        isset($settgins->{'left-margin'})  and $this->SetLeftMargin($settings->{'left-margin'});
+        isset($settgins->{'top-margin'})   and $this->SetTopMargin($settings->{'top-margin'});
+        isset($settgins->{'right-margin'}) and $this->SetRightMargin($settings->{'right-margin'});
         // bottomMargin is not used in FPDF, see SetMargins() documentation.
+
+        // header height
+        if ( ! isset($settings->{'header-height'}))
+        { 
+            $settings->{'header-height'} = isset($settings->{'left-margin'}) ? $settings->{'left-margin'} : $this->lMargin;
+        }
         
         // AutoPageBreak
-        if (isset($settings->autoPagebreak))
+        if (isset($settings->{'auto-pagebreak'}))
         {       
-            if (isset($settings->autoPagebreakMargin))
+            if (isset($settings->{'auto-pagebreak-margin'}))
             {
-                $this->SetAutoPageBreak($settings->autoPagebreak, $settings->autoPagebreakMargin);
+                $this->SetAutoPageBreak($settings->{'auto-pagebreak'}, $settings->{'auto-pagebreak-margin'});
             }
             else
             {
-                $this->SetAutoPageBreak($settings->autoPagebreak);
+                $this->SetAutoPageBreak($settings->{'auto-pagebreak'});
             }
         }
         
@@ -76,12 +82,12 @@ class JsonPDF extends Fpdf
         }
         
         // default font
-        if (isset($settings->defaultFont))
+        if (isset($settings->{'default-font'}))
         {
-            $fname  = $settings->defaultFont->name;
-            $fstyle = isset($settings->defaultFont->style) ? $settings->defaultFont->style : '';
-            $ffile  = isset($settings->defaultFont->file) ? $settings->defaultFont->file : false;
-            $fsize  = isset($settings->defaultFont->size) ? $settings->defaultFont->size : 10;
+            $fname  = $settings->{'default-font'}->name;
+            $fstyle = isset($settings->{'default-font'}->style) ? $settings->{'default-font'}->style : '';
+            $ffile  = isset($settings->{'default-font'}->file) ? $settings->{'default-font'}->file : false;
+            $fsize  = isset($settings->{'default-font'}->size) ? $settings->{'default-font'}->size : 10;
             
             if ($ffile)
             {
@@ -166,7 +172,7 @@ class JsonPDF extends Fpdf
 
         foreach ($objects as $obj)
         {
-            $method = 'render'.ucfirst($obj->type);
+            $method = 'render'.$this->snakeToCamel($obj->type, '-');
             if (method_exists(__CLASS__, $method))
             {
                 call_user_func(array($this, $method), $obj);
@@ -454,5 +460,9 @@ class JsonPDF extends Fpdf
         $this->SetDrawColor(0, 0, 0);
         $this->SetFillColor(255, 255, 255);
     }
-    
+ 
+    public function snakeToCamel($str, $separator = '_')
+    {
+        return str_replace(' ', '', ucwords(str_replace($separator, ' ', $str)));
+    }
 }
