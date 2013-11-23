@@ -1,5 +1,11 @@
 <?php
-require 'vendor/autoload.php';
+// use these require statements if you point your http server directly to this folder.
+require "../Fpdf.php";
+require "../JsonPDF.php";
+
+// use this require statement instead if you install JsonPDF via composer 
+// and comment out the above require statements.
+//require 'vendor/autoload.php';
 
     $data = array(
 
@@ -67,7 +73,7 @@ require 'vendor/autoload.php';
                 'multiline' => true,
                 'font' => 'THSarabun', 
                 'font-size' => 20,
-                'text' => 'Hello, {name}. This is a test sentence. Today is {date}',
+                'text' => 'Hello, {name}. Today is {date}',
                 'align' => 'L',
                 'y' => 35,
                 'width' => 150,
@@ -87,15 +93,15 @@ require 'vendor/autoload.php';
             ),
             array(
                 'type' => 'line',
-                'x1' => 10, 'y1' => 180,
-                'x2' => 150, 'y2' => 180,
+                'x1' => 10, 'y1' => 190,
+                'x2' => 150, 'y2' => 190,
                 'draw-color' => '255,128,128',
             ),
             array(
                 'type' => 'rect',
-                'x' => 10, 'y' => 50,
+                'x' => 10, 'y' => 60,
                 'width' => 50,
-                'height' => 30,
+                'height' => 20,
                 'draw-color' => '255,128,128',
             ),
             array(
@@ -114,6 +120,7 @@ require 'vendor/autoload.php';
         
         'tables' => array(
             'world_info_table' => array(
+                'max-rows' => 10,
                 'columns' => array(
                     array(
                         'name' => 'country',
@@ -184,7 +191,8 @@ require 'vendor/autoload.php';
         ),
         'data' => array(
             'name' => 'Rati',
-            'date' => 'Nov. 09, 2013',
+            // 'date' => 'Nov. 09, 2013',
+            'date' => date('l jS \of F Y h:i:s A'),
             'world_info' => array(
                 array('country' => 'Austria', 'capital' => 'Vienna', 'area' => '83,859', 'pop' => '8,075'),
                 array('country' => 'Belgium', 'capital' => 'Brussels', 'area' => '30,518', 'pop' => '10,192'),
