@@ -402,9 +402,12 @@ class JsonPDF extends Fpdf
 
         $totalWidth = 0;
         
-        for ($r=0; $r<count($data); $r++)
+        $maxRows = isset($table->{'max-rows'}) ? $table->{'max-rows'} : 0;
+        $maxRows = ($maxRows > 0) ? $maxRows : count($data);
+        
+        for ($r=0; $r<$maxRows; $r++)
         {
-            $row = $data[$r];
+            $row = ($r < count($data)) ? $data[$r] : array();
             for ($c=0; $c<count($columns); $c++)
             {
                 $col = $columns[$c];
@@ -412,7 +415,7 @@ class JsonPDF extends Fpdf
                 $this->Cell(
                     $colWidth, 
                     $lineHeight, 
-                    $row->{$col->name}, 
+                    ($r < count($data)) ? $row->{$col->name} : "", 
                     $border,
                     0, 
                     isset($col->{'data-align'}) ? $col->{'data-align'} : 'L',
