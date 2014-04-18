@@ -8,20 +8,26 @@ require "../JsonPDF.php";
 //require 'vendor/autoload.php';
 
     $data = array(
-        'body' => array(
-            array(
-                'type' => 'text',
-                'width' => 40,
-                'height' => 10,
-                'text' => 'Hello World!',
-                'font' => 'Arial',
-                'font-style' => 'B',
-                'font-size' => 16,
-            ),
-            array(
-                'type' => 'text',
-                'text' => 'Hi, there!',
-            ),
+        'layers' => array(
+        
+            'layer1' => array(
+                'body' => array(
+                    array(
+                        'type' => 'text',
+                        'width' => 40,
+                        'height' => 10,
+                        'text' => 'Hello World!',
+                        'font' => 'Arial',
+                        'font-style' => 'B',
+                        'font-size' => 16,
+                    ),
+                    array(
+                        'type' => 'text',
+                        'text' => 'Hi, there!',
+                    ),
+                ),
+            )
+        
         ),
     );
 

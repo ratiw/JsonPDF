@@ -4,9 +4,15 @@ class JsonPDF extends Fpdf
 {
     protected $settings     = null;
 
-    protected $header       = null;
+    protected $layers       = null;
 
-    protected $footer       = null;
+    protected $headers      = array();
+
+    protected $footers      = array();
+
+    // protected $header       = null;
+
+    // protected $footer       = null;
 
     protected $tables       = null;
 
@@ -22,16 +28,40 @@ class JsonPDF extends Fpdf
         isset($data->settings) and $this->init($data->settings);
         isset($data->fonts)    and $this->addFonts($data->fonts);
 
-        isset($data->header) and $this->setHeader($data->header);
-        isset($data->footer) and $this->setFooter($data->footer);
-
         isset($data->tables) and $this->setTables($data->tables);
         isset($data->data)   and $this->setVars($data->data);
 
-        $this->AddPage();
-        $this->renderSection($data->body);
+        $this->setLayers($data->layers);
+
+        $this->renderPage();
 
         return $this;
+    }
+
+    public function setLayers($layers)
+    {
+        $this->layers = $layers;
+        // header and footer must be set before a page is added
+        $this->setHeaderAndFooter();
+    }
+
+    protected function setHeaderAndFooter()
+    {
+        foreach ($this->layers as $name => $layer)
+        {
+            isset($layer->header) and $this->setHeader($layer->header);
+            isset($layer->footer) and $this->setFooter($layer->footer);
+        }
+    }
+
+    public function renderPage()
+    {
+        $this->AddPage();
+
+        foreach ($this->layers as $name => $layer)
+        {
+            isset($layer->body) and $this->renderSection($layer->body);
+        }
     }
 
     public function init($settings)
@@ -136,12 +166,14 @@ class JsonPDF extends Fpdf
 
     public function setHeader($objects)
     {
-        $this->header = $objects;
+        // $this->header = $objects;
+        $this->headers[] = $objects;
     }
 
     public function setFooter($objects)
     {
-        $this->footer = $objects;
+        // $this->footer = $objects;
+        $this->footers[] = $objects;
     }
 
     public function setTables($objects)
@@ -455,16 +487,22 @@ class JsonPDF extends Fpdf
 
     function Header()
     {
-        $this->resetDrawing();
-        $this->renderSection($this->header);
-        isset($this->settings->{'header-height'}) and $this->SetY($this->settings->{'header-height'});
+        foreach ($this->headers as $header)
+        {
+            $this->resetDrawing();
+            $this->renderSection($header);
+            isset($this->settings->{'header-height'}) and $this->SetY($this->settings->{'header-height'});
+        }
    }
 
     function Footer()
     {
-        $this->resetDrawing();
-        isset($this->settings->{'auto-pagebreak-margin'}) and $this->SetY(-$this->settings->{'auto-pagebreak-margin'});
-        $this->renderSection($this->footer);
+        foreach ($this->footers as $footer)
+        {
+            $this->resetDrawing();
+            isset($this->settings->{'auto-pagebreak-margin'}) and $this->SetY(-$this->settings->{'auto-pagebreak-margin'});
+            $this->renderSection($footer);
+        }
     }
 
     public function resetDrawing()

@@ -7,7 +7,7 @@ require "../JsonPDF.php";
 // and comment out the above require statements.
 //require 'vendor/autoload.php';
 
-    $data = array(
+    $document = array(
 
         'layers' => array(
             'layer1' => array(
@@ -85,7 +85,9 @@ require "../JsonPDF.php";
                         'font-size' => 20,
                     ),
                 ),
-            )
+            ),
+            'layer2' => array(
+            ),
         ),
         
         'tables' => array(
@@ -121,19 +123,19 @@ require "../JsonPDF.php";
                 ),
                 'data' => 'world_info',
                 'style' => array(
-                    'border-color' => '50,55,200',
-                    // 'border' => 'LR',
+                    //'border-color' => '50,55,200',
+                    'border' => '',
                     'title-row' => array(
                         'height' => 8,
                         'text-color' => '200, 100, 50',
-                        'fill-color' => '100,50,50',
+                        //'fill-color' => '100,50,50',
                         // 'font' => 'Arial',
                     ),
                     'data-row' => array(
                         'height' => 8,
                         'text-color' => '0,0,0',
-                        'fill-color' => '224,235,255',
-                        'striped' => true,
+                        //'fill-color' => '224,235,255',
+                        //'striped' => true,
                     ),
                 ),
             ),
@@ -214,8 +216,8 @@ require "../JsonPDF.php";
         
     );
 
-    $pdf = new ratiw\JsonPDF\JsonPDF('L', 'mm', 'A4');
-    $pdf->make(json_encode($data));
+    $pdf = new ratiw\JsonPDF\JsonPDF('P', 'mm', 'A4');
+    $pdf->make(json_encode($document));
     $pdf->render();
 
 ?>
