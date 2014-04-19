@@ -3,7 +3,7 @@
 require "../Fpdf.php";
 require "../JsonPDF.php";
 
-// use this require statement instead if you install JsonPDF via composer 
+// use this require statement instead if you install JsonPDF via composer
 // and comment out the above require statements.
 //require 'vendor/autoload.php';
 
@@ -57,8 +57,14 @@ require "../JsonPDF.php";
                         'y' => 35,
                         'x' => 10,
                         'table' => 'world_info_table',
-                        'font' => 'THSarabun', 
+                        'font' => 'THSarabun',
                         'font-size' => 20,
+                        'style' => array(
+                            'title-row' => array(
+                                'height' => 8,
+                                'draw-text' => false,
+                            )
+                        )
                     ),
                 ),
                 'footer' => array(
@@ -81,13 +87,24 @@ require "../JsonPDF.php";
                     array(
                         'type' => 'table-body',
                         'table' => 'world_info_table',
-                        'font' => 'THSarabun', 
+                        'font' => 'THSarabun',
                         'font-size' => 20,
+                        // override default setting
+                        'style' => array(
+                            // 'border' => '',
+                            'data-row' => array(
+                                // 'height' => 10,
+                                // 'text-color' => '0,0,0',
+                                // 'fill-color' => '',
+                                // 'striped' => false,
+                                // 'draw-text' => false,
+                            )
+                        ),
                     ),
                 ),
-            )
+            ),
         ),
-        
+
         'tables' => array(
             'world_info_table' => array(
                 'columns' => array(
@@ -138,7 +155,7 @@ require "../JsonPDF.php";
                 ),
             ),
         ),
-        
+
         'settings' => array(
             'title'       => 'Test PDF',
             'author'      => 'Rati Wannapanop',
@@ -149,7 +166,7 @@ require "../JsonPDF.php";
                 'size' => 30,
             ),
         ),
-        
+
         'fonts' => array(
             array('THSarabun', '', 'THSarabun.php'),
             array('THSarabun', 'B', 'THSarabun Bold.php'),
@@ -193,7 +210,7 @@ require "../JsonPDF.php";
                 array('country' => 'Spain', 'capital' => 'Madrid', 'area' => '504,790', 'pop' => '39,348'),
                 array('country' => 'Sweden', 'capital' => 'Stockholm', 'area' => '410,934', 'pop' => '8,839'),
                 array('country' => 'United Kingdom', 'capital' => 'London', 'area' => '243,820', 'pop' => '58,862'),
-                // set 3 
+                // set 3
                 array('country' => 'Austria', 'capital' => 'Vienna', 'area' => '83,859', 'pop' => '8,075'),
                 array('country' => 'Belgium', 'capital' => 'Brussels', 'area' => '30,518', 'pop' => '10,192'),
                 array('country' => 'Denmark', 'capital' => 'Copenhagen', 'area' => '43,094', 'pop' => '5,295'),
@@ -211,7 +228,7 @@ require "../JsonPDF.php";
                 array('country' => 'United Kingdom', 'capital' => 'London', 'area' => '243,820', 'pop' => '58,862'),
             ),
         ),
-        
+
     );
 
     $pdf = new ratiw\JsonPDF\JsonPDF('L', 'mm', 'A4');

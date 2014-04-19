@@ -10,10 +10,6 @@ class JsonPDF extends Fpdf
 
     protected $footers      = array();
 
-    // protected $header       = null;
-
-    // protected $footer       = null;
-
     protected $tables       = null;
 
     protected $varKeys      = null;
@@ -136,10 +132,11 @@ class JsonPDF extends Fpdf
         // default font
         if (isset($settings->{'default-font'}))
         {
-            $fname  = $settings->{'default-font'}->name;
-            $fstyle = isset($settings->{'default-font'}->style) ? $settings->{'default-font'}->style : '';
-            $ffile  = isset($settings->{'default-font'}->file) ? $settings->{'default-font'}->file : false;
-            $fsize  = isset($settings->{'default-font'}->size) ? $settings->{'default-font'}->size : 10;
+            $font   = $settings->{'default-font'};
+            $fname  = $font->name;
+            $fstyle = isset($font->style) ? $font->style : '';
+            $ffile  = isset($font->file) ? $font->file : false;
+            $fsize  = isset($font->size) ? $font->size : 10;
 
             if ($ffile)
             {
@@ -367,7 +364,7 @@ class JsonPDF extends Fpdf
         array_key_exists($obj->table, $this->tables) or $this->Error('['.$obj->table.'] table definition not found!');
 
         $table = $this->tables[$obj->table];
-        isset($table->style) || $table->style = new stdClass;
+        $style = isset($table->style) ? $table->style : $table->style = new StdClass;
 
         $this->setObjectProperties($obj);
 
@@ -404,12 +401,20 @@ class JsonPDF extends Fpdf
         $table = $this->tables[$obj->table];
         $columns = $table->columns;
 
-        $lineHeight = isset($table->style->{'title-row'}->height) ? $table->style->{'title-row'}->height : $this->lasth;
+        // override default table style, if provided
+        $style = isset($table->style) ? $table->style : new StdClass;
+        if (isset($obj->style)) {
+            $style = (object) $this->deep_merge((array) $style, (array) $obj->style);
+        }
+        $rowStyle = $style->{'title-row'};
 
-        isset($table->style->{'title-row'}) and $this->setTableStyle($table->style->{'title-row'});
+        $lineHeight = isset($rowStyle->height) ? $rowStyle->height : $this->lasth;
 
-        $border  = isset($table->style->border) ? $table->style->border : 1;
-        $filled  = isset($table->style->{'title-row'}->{'fill-color'}) ? $table->style->{'title-row'}->{'fill-color'} : false;
+        isset($rowStyle) and $this->setTableStyle($rowStyle);
+
+        $border  = isset($style->border) ? $style->border : 1;
+        $filled  = isset($rowStyle->{'fill-color'}) ? $rowStyle->{'fill-color'} : false;
+        $drawText = isset($rowStyle->{'draw-text'}) ? $rowStyle->{'draw-text'} : true;
 
         for ($i=0; $i<count($columns); $i++)
         {
@@ -418,7 +423,7 @@ class JsonPDF extends Fpdf
             $this->Cell(
                 $colWidth,
                 $lineHeight,
-                isset($col->title) ? $col->title : ucfirst($col->name),
+                isset($col->title) && $drawText ? $col->title : ucfirst($col->name),
                 $border,
                 0,
                 isset($col->{'title-align'}) ? $col->{'title-align'} : 'C',
@@ -438,13 +443,23 @@ class JsonPDF extends Fpdf
 
         $columns = $table->columns;
 
-        $lineHeight = isset($table->style->{'data-row'}->height) ? $table->style->{'data-row'}->height : $this->lasth;
+        // override default table style, if provided
+        $style = isset($table->style) ? $table->style : new StdClass;
+        if (isset($obj->style)) {
+            // $style = (object) array_merge((array) $style, (array) $obj->style);
+            $style = (object) $this->deep_merge((array) $style, (array) $obj->style);
+        }
 
-        isset($table->style->{'data-row'}) and $this->setTableStyle($table->style->{'data-row'});
+        $rowStyle = $style->{'data-row'};
 
-        $border  = isset($table->style->border) ? $table->style->border : 'LR';
-        $filled  = isset($table->style->{'data-row'}->{'fill-color'}) ? $table->style->{'data-row'}->{'fill-color'} : false;
-        $striped = isset($table->style->{'data-row'}->striped) ? $table->style->{'data-row'}->striped : false;
+        $lineHeight = isset($rowStyle->height) ? $rowStyle->height : $this->lasth;
+
+        isset($rowStyle) and $this->setTableStyle($rowStyle);
+
+        $border  = isset($style->border) ? $style->border : 'LR';
+        $filled  = isset($rowStyle->{'fill-color'}) ? $rowStyle->{'fill-color'} : false;
+        $striped = $filled && isset($rowStyle->striped) ? $rowStyle->striped : false;
+        $drawText = isset($rowStyle->{'draw-text'}) ? $rowStyle->{'draw-text'} : true;
 
         $totalWidth = 0;
 
@@ -458,10 +473,11 @@ class JsonPDF extends Fpdf
             {
                 $col = $columns[$c];
                 $colWidth = isset($col->width) ? $col->width : 20;
+                $text = ($drawText && $r < count($data)) ? $row->{$col->name} : "";
                 $this->Cell(
                     $colWidth,
                     $lineHeight,
-                    ($r < count($data)) ? $row->{$col->name} : "",
+                    $text,
                     $border,
                     0,
                     isset($col->{'data-align'}) ? $col->{'data-align'} : 'L',
@@ -515,5 +531,49 @@ class JsonPDF extends Fpdf
     public function snakeToCamel($str, $separator = '_')
     {
         return str_replace(' ', '', ucwords(str_replace($separator, ' ', $str)));
+    }
+
+    public function deep_merge()
+    {
+        $args = func_get_args();
+        return $this->deep_merge_recursive($args);
+    }
+
+    // modified from drupal_array_merge_deep_array
+    // but also handle embeded objects
+    protected function deep_merge_recursive($arrays)
+    {
+        $result = array();
+
+        foreach ($arrays as $array)
+        {
+            foreach ($array as $key => $value)
+            {
+                if (is_integer($key))
+                {
+                    $result[] = $value;
+                }
+                elseif (isset($result[$key]) && is_array($result[$key]) && is_array($value))
+                {
+                    $result[$key] = $this->deep_merge_recursive(array($result[$key], $value));
+                }
+                // handle embeded object with object value
+                elseif (isset($result[$key]) && is_object($result[$key]) && is_object($value))
+                {
+                    $result[$key] = (object)$this->deep_merge_recursive(array((array)$result[$key], (array)$value));
+                }
+                // handle embeded object with array value
+                elseif (isset($result[$key]) && is_object($result[$key]) && is_array($value))
+                {
+                    $result[$key] = (object)$this->deep_merge_recursive(array((array)$result[$key], $value));
+                }
+                else
+                {
+                    $result[$key] = $value;
+                }
+            }
+        }
+
+        return $result;
     }
 }
