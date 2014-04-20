@@ -544,6 +544,12 @@ class JsonPDF extends Fpdf
         return $this->deep_merge_recursive($args);
     }
 
+    public function deepMerge()
+    {
+        $args = func_get_args();
+        return $this->deep_merge_recursive($args);
+    }
+
     // modified from drupal_array_merge_deep_array
     // but also handle embeded objects
     protected function deep_merge_recursive($arrays)
