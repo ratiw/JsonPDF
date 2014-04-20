@@ -17,7 +17,7 @@ Just add the requirement to you `composer.json` file.
 
     <?php
         require "vendor/autoload.php";
-        
+
         // This part usually comes from file or http request
         $data = array(
             'body' => array(
@@ -36,7 +36,7 @@ Just add the requirement to you `composer.json` file.
                 ),
             ),
         );
-        
+
         // The main code is here
         $pdf = new ratiw\JsonPDF\JsonPDF('P', 'mm', 'A4');
         $pdf->make(json_encode($data));
@@ -81,126 +81,126 @@ __data__      | Array of data to be binded to the text object while rendering th
 __tables__    | Defines each table properties. These table will be reference by `table`, `table-header`, `table-body` objects.
 
 ##Objects
-There are 5 object types in JsonPDF. Each doing a specific task to render PDF document. 
+There are 5 object types in JsonPDF. Each doing a specific task to render PDF document.
 
 Every objects share some common properties like the draw color, fill color (background color), x-y position, etc.
 
-The following object types are available:   
+The following object types are available:
 
-- text  
-- line  
-- rect  
-- image     
-- table     
-    
+- text
+- line
+- rect
+- image
+- table
+
 
 ###Common Object Properties
 The following properties are common to all objects, which mean they can be set on any object. They may or may not affect the rendering of the object depending on whether that object uses that property or not.
 
-__properties__      
+__properties__
 
-- `x` _(optional)_     
+- `x` _(optional)_
     starting horizontal position of the object.
 
-- `y` _(optional)_       
-    starting vertical position of the object.  
+- `y` _(optional)_
+    starting vertical position of the object.
 
-- `font` _(optional)_    
+- `font` _(optional)_
     font name.
 
-- `font-style` _(optional)_     
+- `font-style` _(optional)_
     font style: N, B, BI
 
-- `font-size` _(optional)_      
+- `font-size` _(optional)_
     font size
 
-- `text-color` _(optional)_    
+- `text-color` _(optional)_
     text color. If omitted, the current text color will be used.
 
-- `draw-color` _(optional)_    
-    line color. If omitted, the current line color will be used.     
+- `draw-color` _(optional)_
+    line color. If omitted, the current line color will be used.
 
-- `fill-color` _(optional)_    
+- `fill-color` _(optional)_
     fill color, If omitted, the current fill color will be used.
 
-- `line-width` _(optional)_    
-    line width. If omitted, the default value (0.2mm as specified in the [FPDF document](http://www.fpdf.org/en/doc/setlinewidth.htm)) will be used.    
+- `line-width` _(optional)_
+    line width. If omitted, the default value (0.2mm as specified in the [FPDF document](http://www.fpdf.org/en/doc/setlinewidth.htm)) will be used.
 
 
 
 ###Text Object
-The `text` object uses to display text at the specified position. Data can be bound to the `text` object by enclosing the data name in curly braces `{}` embedding in the _text_ property of the `text` object.  
+The `text` object uses to display text at the specified position. Data can be bound to the `text` object by enclosing the data name in curly braces `{}` embedding in the _text_ property of the `text` object.
 
 The following example shows the `username` data embedded in the text property. This `username` will be replaced by the actual data provided in the `data` section of the JSON.
 
     "body": [
-        {   
+        {
             "type": "text",
             "x": 10,
             "y": 20,
             "text": "Hello, {username}. How are you today!",
             "text-color": "255,125,125"
-        }   
+        }
     ],
     "data": [
         "username": "Rati"
     ]
 
-####Additional properties      
+####Additional properties
 
-- `align` _(optional)_    
+- `align` _(optional)_
 
-- `ln` _(optional)_    
+- `ln` _(optional)_
 
-- `border` _(optional)_    
+- `border` _(optional)_
 
-- `text` _(optional)_    
+- `text` _(optional)_
 
-- `width` _(optional)_    
+- `width` _(optional)_
 
-- `height` _(optional)_    
+- `height` _(optional)_
 
-- `multiline` _(optional)_    
-
-
-###Line Object      
-The `line` object uses to draw a line at the given position specified by `x1`, `y1`, `x2`, `y2`.    
-
-__properties__      
-
-- `x1`, `y1`    
-    starting position of the line.  
-
-- `x2`, `y2`    
-    end position of the line. If `x2` is omitted, the line will be drawn to the right margin of the document. If `y2` is omitted, it assumes the value of `y1`, thus drawing a straight line.    
+- `multiline` _(optional)_
 
 
-### Rect Object     
+###Line Object
+The `line` object uses to draw a line at the given position specified by `x1`, `y1`, `x2`, `y2`.
+
+__properties__
+
+- `x1`, `y1`
+    starting position of the line.
+
+- `x2`, `y2`
+    end position of the line. If `x2` is omitted, the line will be drawn to the right margin of the document. If `y2` is omitted, it assumes the value of `y1`, thus drawing a straight line.
+
+
+### Rect Object
 The `rect` object uses to draw a rectangle on the document using the specified `x`, `y`, `width`, `height` properties.
 
-__properties__      
+__properties__
 
-- `x`, `y`    
-    starting position of the object.  
+- `x`, `y`
+    starting position of the object.
 
-- `width`   
-- `height`  
-- `style` _(optional)_   
+- `width`
+- `height`
+- `style` _(optional)_
 
 
-### Image Object    
+### Image Object
 The `image` object uses to draw the given image on the document at the speicifed location, `width` and `height`.
 
-__properties__      
+__properties__
 
-- `url`     
+- `url`
     URL of the image.
 
-- `width` _(optional)_         
-- `height` _(optional)_        
+- `width` _(optional)_
+- `height` _(optional)_
 
 
-### Table, Table Header, Table Body Objects    
+### Table, Table Header, Table Body Objects
 The `table` object is used to draw a data table on the document. The table properties must be defined in the `tables` section and the data must be present in the `data` section of the JSON.
 
 `table` object will render the complete table with the table header and body.
@@ -209,9 +209,9 @@ The `table` object is used to draw a data table on the document. The table prope
 
 `table-body` object will render only the body part of the given table.
 
-__properties__      
+__properties__
 
-- `table`   
+- `table`
     Name of table defined in the `tables` section.
 
 
@@ -225,24 +225,25 @@ This section is used to set various properties for the PDF document.
         "creator": "JsonPDF"
     }
 
-__properties__      
+__properties__
 
-- `alias-nb-pages`     
-- `left-margin`  
-- `top-margin`   
-- `right-margin` 
-- `auto-pagebreak`   
-- `auto-agebreak-margin` 
-- `compression` 
-- `zoom`    
-- `layout`  
-- `default-font` 
-- `utf8`    
-- `author`  
-- `title`   
-- `subject` 
-- `keywords`    
-- `creator` 
+- `alias-nb-pages`
+- `left-margin`
+- `top-margin`
+- `right-margin`
+- `auto-pagebreak`
+- `auto-agebreak-margin`
+- `compression`
+- `zoom`
+- `layout`
+- `default-font`
+- `utf8`
+- `author`
+- `title`
+- `subject`
+- `keywords`
+- `creator`
+- `header-height`
 
 
 ----
@@ -259,11 +260,11 @@ See more information on this at [FPDF website](http://www.fpdf.org/en/tutorial/t
         ["THSarabun", "I", "THSarabun Italic.php"],
         ["THSarabun", "BI", "THSarabun Bold Italic.php"]
     ]
-    
-    
+
+
 ----
 ##Data Binding
-You define data for the variables in this section. Variable name is enclosed in the curly braces, e.g. `{name}`. 
+You define data for the variables in this `data` section. Variable name is enclosed in the curly braces, e.g. `{name}`.
 
 Variables are usually embedded in the `text` property of the `Text` object.
 
@@ -274,7 +275,7 @@ Variables are usually embedded in the `text` property of the `Text` object.
         }
     ],
     //
-    // .... 
+    // ....
     //
     "data": {
         "name": "Rati Wannapanop",
@@ -290,15 +291,16 @@ Variables are usually embedded in the `text` property of the `Text` object.
 ##Tables Definition
 You can define tables structure in this section. Each table definition consists of 3 properties: `columns`, `data`, and `style`.
 
-`columns` property defines each column characteristic for the given table. See Table Column below.     
+`columns` property defines each column characteristic for the given table. See Table Column below.
 
-`data` property specifies which _key_ in the `data` section should be used for data rendering inside the given table.   
+`data` property specifies which _key_ in the `data` section should be used for data rendering inside the given table.
 
-`style` property defines how the given table should be rendered. The `style` properties is optional and if omitted default value will be used. See Table Style below.      
+`style` property defines how the given table should be rendered. The `style` properties is optional and if omitted default value will be used. See Table Style below.
 
 
     "tables": [
         ["world_info_table": {
+            // "max-rows": 10,
             "columns": [
                 {
                     "name": "country",
@@ -330,7 +332,8 @@ You can define tables structure in this section. Each table definition consists 
                     "height": 8,
                     "text-color": "0,0,0",
                     "fill-color": "224,235,255",
-                    "striped": true
+                    "striped": true,
+                    // "draw-text": true,
                 }
             }
         }],
@@ -339,9 +342,9 @@ You can define tables structure in this section. Each table definition consists 
             ...
         }]
     ],
-    
-    
-__Table Column__    
+
+
+__Table Column__
 
     "columns": [
         {"name": "country", "width": 45, "title": "Country", "title-align": "L", "data-align": "L"},
@@ -350,15 +353,15 @@ __Table Column__
         {"name": "pop", "width": 50, "title": "Pop. (thousands)", "title-align": "C", "data-align": "R"}
     ]
 
-- `name` -- column name       
-- `width` -- column width       
-- `title` -- column title   
-- `title-align` -- column title alignment 
-- `data-align` -- data column alignment  
-    
+- `name` -- column name
+- `width` -- column width
+- `title` -- column title
+- `title-align` -- column title alignment
+- `data-align` -- data column alignment
 
-__Table Style__     
-The table `style` property allow the user to define how the table should looks. 
+
+__Table Style__
+The table `style` property allow the user to define how the table should looks.
 
     "style": {
         "border-color": "50,55,200",
@@ -374,23 +377,30 @@ The table `style` property allow the user to define how the table should looks.
         }
     }
 
-- `border-color` -- specify the border color of the table.    
-    
+- `border-color` -- specify the border color of the table.
+
 - `title-row` -- define how the title row should be rendered.
     - `height`  -- row height
-    - `text-color`  
-    - `fill-color`  
-    - `font`    
-    - `font-style`  
-    - `font-size`   
-    
-- `data-row` -- define how the data row should be rendered.    
-    - `height`  -- row height
-    - `text-color`  
-    - `fill-color`  
-    - `striped` 
-    - `font`    
-    - `font-style`  
-    - `font-size`   
+    - `text-color`
+    - `fill-color`
+    - `font`
+    - `font-style`
+    - `font-size`
+    - `draw-text`
 
+- `data-row` -- define how the data row should be rendered.
+    - `height`  -- row height
+    - `text-color`
+    - `fill-color`
+    - `striped`
+    - `font`
+    - `font-style`
+    - `font-size`
+    - `draw-text`
+
+----
+##Utility functions
+
+ - `snakeToCamel`
+ - `deepMerge` or `deep_merge`
 
