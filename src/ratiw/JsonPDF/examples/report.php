@@ -18,6 +18,8 @@ require "../JsonPDF.php";
                         'x' => 10,
                         'y' => 5,
                         'width' => 20,
+                        // 'render-as' => 'form|data|(both)',
+                        'render-as' => 'form',
                     ),
                     array(
                         'type' => 'text',
@@ -27,6 +29,7 @@ require "../JsonPDF.php";
                         'font-size'  => 26,
                         'y' => 13,
                         'align'  => 'R',
+                        'render-as' => 'form',
                     ),
                     array(
                         'type' => 'text',
@@ -37,6 +40,7 @@ require "../JsonPDF.php";
                         'x' => 33,
                         'y' => 13,
                         'width' => 80,
+                        'render-as' => 'form',
                     ),
                     array(
                         'type' => 'text',
@@ -46,14 +50,17 @@ require "../JsonPDF.php";
                         'x' => 33,
                         'y' => 20,
                         'width' => 80,
+                        'render-as' => 'form',
                     ),
                     array(
                         'type' => 'line',
                         'x1' => 10, 'y1' => 28,
                         'draw-color' => '100',  // gray scale
+                        'render-as' => 'form',
                     ),
                     array(
                         'type' => 'table-header',
+                        'render-as' => 'form',
                         'y' => 35,
                         'x' => 10,
                         'table' => 'world_info_table',
@@ -62,7 +69,7 @@ require "../JsonPDF.php";
                         'style' => array(
                             'title-row' => array(
                                 'height' => 8,
-                                'draw-text' => false,
+                                // 'draw-text' => false,
                             )
                         )
                     ),
@@ -80,6 +87,7 @@ require "../JsonPDF.php";
                         'text' => 'Page {page}/{nb}',
                         'border' => 'T',
                         'align' => 'C',
+                        'render-as' => 'form',
                     ),
                 ),
 
@@ -91,11 +99,11 @@ require "../JsonPDF.php";
                         'font-size' => 20,
                         // override default setting
                         'style' => array(
-                            // 'border' => '',
+                            // 'border' => 'LR',
                             'data-row' => array(
                                 // 'height' => 10,
                                 // 'text-color' => '0,0,0',
-                                // 'fill-color' => '',
+                                // 'fill-color' => '224,235,255',
                                 // 'striped' => false,
                                 // 'draw-text' => false,
                             )
@@ -233,7 +241,7 @@ require "../JsonPDF.php";
     );
 
     $pdf = new ratiw\JsonPDF\JsonPDF('P', 'mm', 'A4');
-    $pdf->make(json_encode($data));
+    $pdf->make(json_encode($data), 'both');
     $pdf->render();
 
 ?>

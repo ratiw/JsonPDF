@@ -16,10 +16,16 @@ class JsonPDF extends Fpdf
     protected $varValues    = null;
     protected $varSets      = null;
 
+    const RENDER_FORM_ONLY  = 'form';
+    const RENDER_DATA_ONLY  = 'data';
+    const RENDER_ALL        = 'both';
 
-    public function make($data)
+    protected $renderWhat   = self::RENDER_ALL;
+
+    public function make($data, $renderWhat = self::RENDER_ALL)
     {
         $data = json_decode($data);
+        $this->renderWhat = $renderWhat;
 
         isset($data->settings) and $this->init($data->settings);
         isset($data->fonts)    and $this->addFonts($data->fonts);
@@ -258,8 +264,44 @@ class JsonPDF extends Fpdf
         isset($obj->x) and $this->SetX($obj->x);
     }
 
+    public function callSetColorMethod($method, $color)
+    {
+        $rgb = explode(',', $color);
+        for ($i=0; $i<count($rgb); $i++)
+        {
+            $rgb[$i] = intval($rgb[$i]);
+        }
+
+        if (count($rgb) < 3)
+        {
+            call_user_func(array($this, $method), $rgb[0]);
+        }
+        else
+        {
+            call_user_func(array($this, $method), $rgb[0], $rgb[1], $rgb[2]);
+        }
+    }
+
+    public function isRenderable($obj)
+    {
+        $renderAs = isset($obj->{'render-as'}) ? strtolower($obj->{'render-as'}) : self::RENDER_ALL;
+        if ($this->renderWhat == self::RENDER_ALL or $renderAs == $this->renderWhat)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isNotRenderable($obj)
+    {
+        return (! $this->isRenderable($obj));
+    }
+
     public function renderText($obj)
     {
+        if ($this->isNotRenderable($obj)) return;
+
         $this->setObjectProperties($obj);
 
         // alignment and ln-height
@@ -310,26 +352,10 @@ class JsonPDF extends Fpdf
         }
     }
 
-    public function callSetColorMethod($method, $color)
-    {
-        $rgb = explode(',', $color);
-        for ($i=0; $i<count($rgb); $i++)
-        {
-            $rgb[$i] = intval($rgb[$i]);
-        }
-
-        if (count($rgb) < 3)
-        {
-            call_user_func(array($this, $method), $rgb[0]);
-        }
-        else
-        {
-            call_user_func(array($this, $method), $rgb[0], $rgb[1], $rgb[2]);
-        }
-    }
-
     public function renderLine($obj)
     {
+        if ($this->isNotRenderable($obj)) return;
+
         $this->setObjectProperties($obj);
 
         isset($obj->x2) or $obj->x2 = ($this->w - $this->rMargin);
@@ -340,6 +366,8 @@ class JsonPDF extends Fpdf
 
     public function renderRect($obj)
     {
+        if ($this->isNotRenderable($obj)) return;
+
         $this->setObjectProperties($obj);
 
         $style = isset($obj->style) ? strtoupper($obj->style) : 'D';
@@ -349,12 +377,22 @@ class JsonPDF extends Fpdf
 
     public function renderImage($obj)
     {
+        if ($this->isNotRenderable($obj)) return;
+
         $x = isset($obj->x) ? $obj->x : null;
         $y = isset($obj->y) ? $obj->y : null;
         $w = isset($obj->width)  ? $obj->width : 0;
         $h = isset($obj->height) ? $obj->height : 0;
 
         $this->Image($obj->url, $x, $y, $w, $h);
+    }
+
+    public function renderTable($obj)
+    {
+        $this->initTable($obj);
+
+        $this->_renderTableHeader($obj);
+        $this->_renderTableData($obj);
     }
 
     private function initTable($obj)
@@ -371,16 +409,10 @@ class JsonPDF extends Fpdf
         isset($table->style->{'border-color'}) and $this->callSetColorMethod('SetDrawColor', $table->style->{'border-color'});
     }
 
-    public function renderTable($obj)
-    {
-        $this->initTable($obj);
-
-        $this->_renderTableHeader($obj);
-        $this->_renderTableData($obj);
-    }
-
     public function renderTableHeader($obj)
     {
+        if ($this->isNotRenderable($obj)) return;
+
         $this->initTable($obj);
         $this->_renderTableHeader($obj);
     }
@@ -389,11 +421,6 @@ class JsonPDF extends Fpdf
     {
         $this->initTable($obj);
         $this->_renderTableData($obj);
-    }
-
-    public function setTableStyle($style)
-    {
-        $this->setObjectProperties($style);
     }
 
     protected function _renderTableHeader($obj)
@@ -433,6 +460,11 @@ class JsonPDF extends Fpdf
         $this->Ln();
     }
 
+    public function setTableStyle($style)
+    {
+        $this->setObjectProperties($style);
+    }
+
     protected function _renderTableData($obj)   //$columns, $data
     {
         $table = $this->tables[$obj->table];
@@ -456,10 +488,23 @@ class JsonPDF extends Fpdf
 
         isset($rowStyle) and $this->setTableStyle($rowStyle);
 
+        // set render options
         $border  = isset($style->border) ? $style->border : 'LR';
         $filled  = isset($rowStyle->{'fill-color'}) ? $rowStyle->{'fill-color'} : false;
         $striped = $filled && isset($rowStyle->striped) ? $rowStyle->striped : false;
-        $drawText = isset($rowStyle->{'draw-text'}) ? $rowStyle->{'draw-text'} : true;
+        $drawText = true;
+
+        if ($this->renderWhat == self::RENDER_FORM_ONLY)
+        {
+            $drawText = false;
+        }
+        elseif ($this->renderWhat == self::RENDER_DATA_ONLY)
+        {
+            $border  = false;
+            $filled  = false;
+            $striped = false;
+            $drawText = true;
+        }
 
         $totalWidth = 0;
 
