@@ -39,7 +39,9 @@ Just add the requirement to you `composer.json` file.
 
         // The main code is here
         $pdf = new ratiw\JsonPDF\JsonPDF('P', 'mm', 'A4');
-        $pdf->make(json_encode($data));
+        $pdf->make(json_encode($data), 'both');
+        // $pdf->make(json_encode($data), 'form');
+        // $pdf->make(json_encode($data), 'data');
         $pdf->render();
     ?>
 

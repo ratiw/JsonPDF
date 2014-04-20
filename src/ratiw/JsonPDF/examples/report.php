@@ -8,107 +8,102 @@ require "../JsonPDF.php";
 //require 'vendor/autoload.php';
 
     $data = array(
+        'header' => array(
+            array(
+                'type' => 'image',
+                'url'  => 'img/rbb_logo.png',
+                'x' => 10,
+                'y' => 5,
+                'width' => 20,
+                // 'render-as' => 'form|data|(both)',
+                'render-as' => 'form',
+            ),
+            array(
+                'type' => 'text',
+                'text' => '{report_name}',
+                'font' => 'THSarabun',
+                'font-style' => 'B',
+                'font-size'  => 26,
+                'y' => 13,
+                'align'  => 'R',
+                'render-as' => 'form',
+            ),
+            array(
+                'type' => 'text',
+                'text' => 'M U I  Rubber Belt Co., Ltd.',
+                'font' => 'THSarabun',
+                'font-style' => 'b',
+                'font-size'  => 20,
+                'x' => 33,
+                'y' => 13,
+                'width' => 80,
+                'render-as' => 'form',
+            ),
+            array(
+                'type' => 'text',
+                'text' => 'บริษัท เอ็ม ยู ไอ รับเบอร์เบลท์ จำกัด',
+                'font' => 'THSarabun',
+                'font-size'  => 16,
+                'x' => 33,
+                'y' => 20,
+                'width' => 80,
+                'render-as' => 'form',
+            ),
+            array(
+                'type' => 'line',
+                'x1' => 10, 'y1' => 28,
+                'draw-color' => '100',  // gray scale
+                'render-as' => 'form',
+            ),
+            array(
+                'type' => 'table-header',
+                'render-as' => 'form',
+                'y' => 35,
+                'x' => 10,
+                'table' => 'world_info_table',
+                'font' => 'THSarabun',
+                'font-size' => 20,
+                'style' => array(
+                    'title-row' => array(
+                        'height' => 8,
+                        // 'draw-text' => false,
+                    )
+                )
+            ),
+        ),
+        'footer' => array(
+            array(
+                'type' => 'text',
+                'y' => -15,
+                'width' => 0,
+                'height' => 10,
+                'font' => 'Arial',
+                'font-style' => 'I',
+                'font-size'  => 8,
+                'draw-color' => '0,0,0',
+                'text' => 'Page {page}/{nb}',
+                'border' => 'T',
+                'align' => 'C',
+                'render-as' => 'form',
+            ),
+        ),
 
-        'layers' => array(
-            'layer1' => array(
-                'header' => array(
-                    array(
-                        'type' => 'image',
-                        'url'  => 'img/rbb_logo.png',
-                        'x' => 10,
-                        'y' => 5,
-                        'width' => 20,
-                        // 'render-as' => 'form|data|(both)',
-                        'render-as' => 'form',
-                    ),
-                    array(
-                        'type' => 'text',
-                        'text' => '{report_name}',
-                        'font' => 'THSarabun',
-                        'font-style' => 'B',
-                        'font-size'  => 26,
-                        'y' => 13,
-                        'align'  => 'R',
-                        'render-as' => 'form',
-                    ),
-                    array(
-                        'type' => 'text',
-                        'text' => 'M U I  Rubber Belt Co., Ltd.',
-                        'font' => 'THSarabun',
-                        'font-style' => 'b',
-                        'font-size'  => 20,
-                        'x' => 33,
-                        'y' => 13,
-                        'width' => 80,
-                        'render-as' => 'form',
-                    ),
-                    array(
-                        'type' => 'text',
-                        'text' => 'บริษัท เอ็ม ยู ไอ รับเบอร์เบลท์ จำกัด',
-                        'font' => 'THSarabun',
-                        'font-size'  => 16,
-                        'x' => 33,
-                        'y' => 20,
-                        'width' => 80,
-                        'render-as' => 'form',
-                    ),
-                    array(
-                        'type' => 'line',
-                        'x1' => 10, 'y1' => 28,
-                        'draw-color' => '100',  // gray scale
-                        'render-as' => 'form',
-                    ),
-                    array(
-                        'type' => 'table-header',
-                        'render-as' => 'form',
-                        'y' => 35,
-                        'x' => 10,
-                        'table' => 'world_info_table',
-                        'font' => 'THSarabun',
-                        'font-size' => 20,
-                        'style' => array(
-                            'title-row' => array(
-                                'height' => 8,
-                                // 'draw-text' => false,
-                            )
-                        )
-                    ),
-                ),
-                'footer' => array(
-                    array(
-                        'type' => 'text',
-                        'y' => -15,
-                        'width' => 0,
-                        'height' => 10,
-                        'font' => 'Arial',
-                        'font-style' => 'I',
-                        'font-size'  => 8,
-                        'draw-color' => '0,0,0',
-                        'text' => 'Page {page}/{nb}',
-                        'border' => 'T',
-                        'align' => 'C',
-                        'render-as' => 'form',
-                    ),
-                ),
-
-                'body' => array(
-                    array(
-                        'type' => 'table-body',
-                        'table' => 'world_info_table',
-                        'font' => 'THSarabun',
-                        'font-size' => 20,
-                        // override default setting
-                        'style' => array(
-                            // 'border' => 'LR',
-                            'data-row' => array(
-                                // 'height' => 10,
-                                // 'text-color' => '0,0,0',
-                                // 'fill-color' => '224,235,255',
-                                // 'striped' => false,
-                                // 'draw-text' => false,
-                            )
-                        ),
-                    ),
+        'body' => array(
+            array(
+                'type' => 'table-body',
+                'table' => 'world_info_table',
+                'font' => 'THSarabun',
+                'font-size' => 20,
+                // override default setting
+                'style' => array(
+                    // 'border' => 'LR',
+                    'data-row' => array(
+                        // 'height' => 10,
+                        // 'text-color' => '0,0,0',
+                        // 'fill-color' => '224,235,255',
+                        // 'striped' => false,
+                        // 'draw-text' => false,
+                    )
                 ),
             ),
         ),
@@ -182,6 +177,7 @@ require "../JsonPDF.php";
             array('THSarabun', 'I', 'THSarabun Italic.php'),
             array('THSarabun', 'BI', 'THSarabun Bold Italic.php'),
         ),
+
         'data' => array(
             'name' => 'รติ วรรณภานพ',
             'date' => '09/11/2556',

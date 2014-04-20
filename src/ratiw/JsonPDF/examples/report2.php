@@ -3,93 +3,87 @@
 require "../Fpdf.php";
 require "../JsonPDF.php";
 
-// use this require statement instead if you install JsonPDF via composer 
+// use this require statement instead if you install JsonPDF via composer
 // and comment out the above require statements.
 //require 'vendor/autoload.php';
 
     $document = array(
 
-        'layers' => array(
-            'layer1' => array(
-                'header' => array(
-                    array(
-                        'type' => 'image',
-                        'url'  => 'img/rbb_logo.png',
-                        'x' => 10,
-                        'y' => 5,
-                        'width' => 20,
-                    ),
-                    array(
-                        'type' => 'text',
-                        'text' => '{report_name}',
-                        'font' => 'THSarabun',
-                        'font-style' => 'B',
-                        'font-size'  => 26,
-                        'y' => 13,
-                        'align'  => 'R',
-                    ),
-                    array(
-                        'type' => 'text',
-                        'text' => 'M U I  Rubber Belt Co., Ltd.',
-                        'font' => 'THSarabun',
-                        'font-style' => 'b',
-                        'font-size'  => 20,
-                        'x' => 33,
-                        'y' => 13,
-                        'width' => 80,
-                    ),
-                    array(
-                        'type' => 'text',
-                        'text' => 'บริษัท เอ็ม ยู ไอ รับเบอร์เบลท์ จำกัด',
-                        'font' => 'THSarabun',
-                        'font-size'  => 16,
-                        'x' => 33,
-                        'y' => 20,
-                        'width' => 80,
-                    ),
-                    array(
-                        'type' => 'line',
-                        'x1' => 10, 'y1' => 28,
-                        'draw-color' => '100',  // gray scale
-                    ),
-                    array(
-                        'type' => 'table-header',
-                        'y' => 35,
-                        'x' => 10,
-                        'table' => 'world_info_table',
-                        'font' => 'THSarabun', 
-                        'font-size' => 20,
-                    ),
-                ),
-                'footer' => array(
-                    array(
-                        'type' => 'text',
-                        'y' => -15,
-                        'width' => 0,
-                        'height' => 10,
-                        'font' => 'Arial',
-                        'font-style' => 'I',
-                        'font-size'  => 8,
-                        'draw-color' => '0,0,0',
-                        'text' => 'Page {page}/{nb}',
-                        'border' => 'T',
-                        'align' => 'C',
-                    ),
-                ),
-
-                'body' => array(
-                    array(
-                        'type' => 'table-body',
-                        'table' => 'world_info_table',
-                        'font' => 'THSarabun', 
-                        'font-size' => 20,
-                    ),
-                ),
+        'header' => array(
+            array(
+                'type' => 'image',
+                'url'  => 'img/rbb_logo.png',
+                'x' => 10,
+                'y' => 5,
+                'width' => 20,
             ),
-            'layer2' => array(
+            array(
+                'type' => 'text',
+                'text' => '{report_name}',
+                'font' => 'THSarabun',
+                'font-style' => 'B',
+                'font-size'  => 26,
+                'y' => 13,
+                'align'  => 'R',
+            ),
+            array(
+                'type' => 'text',
+                'text' => 'M U I  Rubber Belt Co., Ltd.',
+                'font' => 'THSarabun',
+                'font-style' => 'b',
+                'font-size'  => 20,
+                'x' => 33,
+                'y' => 13,
+                'width' => 80,
+            ),
+            array(
+                'type' => 'text',
+                'text' => 'บริษัท เอ็ม ยู ไอ รับเบอร์เบลท์ จำกัด',
+                'font' => 'THSarabun',
+                'font-size'  => 16,
+                'x' => 33,
+                'y' => 20,
+                'width' => 80,
+            ),
+            array(
+                'type' => 'line',
+                'x1' => 10, 'y1' => 28,
+                'draw-color' => '100',  // gray scale
+            ),
+            array(
+                'type' => 'table-header',
+                'y' => 35,
+                'x' => 10,
+                'table' => 'world_info_table',
+                'font' => 'THSarabun',
+                'font-size' => 20,
             ),
         ),
-        
+        'footer' => array(
+            array(
+                'type' => 'text',
+                'y' => -15,
+                'width' => 0,
+                'height' => 10,
+                'font' => 'Arial',
+                'font-style' => 'I',
+                'font-size'  => 8,
+                'draw-color' => '0,0,0',
+                'text' => 'Page {page}/{nb}',
+                'border' => 'T',
+                'align' => 'C',
+            ),
+        ),
+
+        'body' => array(
+            array(
+                'type' => 'table-body',
+                'table' => 'world_info_table',
+                'font' => 'THSarabun',
+                'font-size' => 20,
+            ),
+        ),
+
         'tables' => array(
             'world_info_table' => array(
                 'columns' => array(
@@ -140,7 +134,7 @@ require "../JsonPDF.php";
                 ),
             ),
         ),
-        
+
         'settings' => array(
             'title'       => 'Test PDF',
             'author'      => 'Rati Wannapanop',
@@ -151,7 +145,7 @@ require "../JsonPDF.php";
                 'size' => 30,
             ),
         ),
-        
+
         'fonts' => array(
             array('THSarabun', '', 'THSarabun.php'),
             array('THSarabun', 'B', 'THSarabun Bold.php'),
@@ -195,7 +189,7 @@ require "../JsonPDF.php";
                 array('country' => 'Spain', 'capital' => 'Madrid', 'area' => '504,790', 'pop' => '39,348'),
                 array('country' => 'Sweden', 'capital' => 'Stockholm', 'area' => '410,934', 'pop' => '8,839'),
                 array('country' => 'United Kingdom', 'capital' => 'London', 'area' => '243,820', 'pop' => '58,862'),
-                // set 3 
+                // set 3
                 array('country' => 'Austria', 'capital' => 'Vienna', 'area' => '83,859', 'pop' => '8,075'),
                 array('country' => 'Belgium', 'capital' => 'Brussels', 'area' => '30,518', 'pop' => '10,192'),
                 array('country' => 'Denmark', 'capital' => 'Copenhagen', 'area' => '43,094', 'pop' => '5,295'),
@@ -213,7 +207,7 @@ require "../JsonPDF.php";
                 array('country' => 'United Kingdom', 'capital' => 'London', 'area' => '243,820', 'pop' => '58,862'),
             ),
         ),
-        
+
     );
 
     $pdf = new ratiw\JsonPDF\JsonPDF('P', 'mm', 'A4');
