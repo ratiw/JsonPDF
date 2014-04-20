@@ -110,14 +110,14 @@ require "../JsonPDF.php";
                 'columns' => array(
                     array(
                         'name' => 'country',
-                        'width' => 45,
+                        'width' => 50,
                         'title' => 'Country',
                         'title-align' => 'L',
                         'data-align'  => 'L',
                     ),
                     array(
                         'name' => 'capital',
-                        'width' => 40,
+                        'width' => 50,
                         'title' => 'Capital',
                         'data-align'  => 'L',
                     ),
@@ -130,7 +130,7 @@ require "../JsonPDF.php";
                     ),
                     array(
                         'name' => 'pop',
-                        'width' => 50,
+                        'width' => 45,
                         'title' => 'Pop. (thousands)',
                         'title-align' => 'C',
                         'data-align'  => 'R',
