@@ -165,6 +165,7 @@ require "../JsonPDF.php";
                 'name' => 'THSarabun',
                 'size' => 30,
             ),
+            'header-height' => 43,
         ),
 
         'fonts' => array(
@@ -231,7 +232,7 @@ require "../JsonPDF.php";
 
     );
 
-    $pdf = new ratiw\JsonPDF\JsonPDF('L', 'mm', 'A4');
+    $pdf = new ratiw\JsonPDF\JsonPDF('P', 'mm', 'A4');
     $pdf->make(json_encode($data));
     $pdf->render();
 

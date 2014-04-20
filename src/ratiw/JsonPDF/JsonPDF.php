@@ -521,6 +521,11 @@ class JsonPDF extends Fpdf
         }
     }
 
+    function AcceptPageBreak()
+    {
+        return true;
+    }
+
     public function resetDrawing()
     {
         $this->SetTextColor(0, 0, 0);
