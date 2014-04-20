@@ -333,7 +333,6 @@ You can define tables structure in this section. Each table definition consists 
                     "text-color": "0,0,0",
                     "fill-color": "224,235,255",
                     "striped": true,
-                    // "draw-text": true,
                 }
             }
         }],
@@ -386,7 +385,6 @@ The table `style` property allow the user to define how the table should looks.
     - `font`
     - `font-style`
     - `font-size`
-    - `draw-text`
 
 - `data-row` -- define how the data row should be rendered.
     - `height`  -- row height
@@ -396,7 +394,6 @@ The table `style` property allow the user to define how the table should looks.
     - `font`
     - `font-style`
     - `font-size`
-    - `draw-text`
 
 ----
 ##Utility functions
