@@ -7,7 +7,7 @@ require "../JsonPDF.php";
 // and comment out the above require statements.
 //require 'vendor/autoload.php';
 
-    $data = array(
+    $document = array(
 
         'body' => array(
             array(
@@ -27,7 +27,7 @@ require "../JsonPDF.php";
     );
 
     $pdf = new ratiw\JsonPDF\JsonPDF('P', 'mm', 'A4');
-    $pdf->make(json_encode($data));
+    $pdf->make(json_encode($document));
     $pdf->render();
 
 ?>

@@ -20,22 +20,22 @@ class JsonPDF extends Fpdf
 
     protected $renderWhat   = self::RENDER_ALL;
 
-    public function make($data, $renderWhat = self::RENDER_ALL)
+    public function make($document, $data = null, $renderWhat = self::RENDER_ALL)
     {
-        $data = json_decode($data);
+        $document = json_decode($document);
         $this->renderWhat = $renderWhat;
 
-        isset($data->settings) and $this->init($data->settings);
-        isset($data->fonts)    and $this->addFonts($data->fonts);
+        isset($document->settings) and $this->init($document->settings);
+        isset($document->fonts)    and $this->addFonts($document->fonts);
 
-        isset($data->tables) and $this->setTables($data->tables);
-        isset($data->data)   and $this->setVars($data->data);
+        isset($document->tables) and $this->setTables($document->tables);
+        isset($data) and $this->setVars(json_decode($data));
 
-        isset($data->header) and $this->setHeader($data->header);
-        isset($data->footer) and $this->setFooter($data->footer);
+        isset($document->header) and $this->setHeader($document->header);
+        isset($document->footer) and $this->setFooter($document->footer);
 
         $this->AddPage();
-        isset($data->body) and $this->renderSection($data->body);
+        isset($document->body) and $this->renderSection($document->body);
 
         return $this;
     }
