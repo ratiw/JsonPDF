@@ -86,6 +86,20 @@ require "../JsonPDF.php";
                 'align' => 'C',
                 'render-as' => 'form',
             ),
+            array(
+                'type' => 'text',
+                'y' => 18,
+                'x' => 210,
+                'width' => 0,
+                'height' => 10,
+                'font' => 'Arial',
+                'font-size'  => 8,
+                'font-style' => '',
+                'draw-color' => '0,0,0',
+                'text' => 'Page {page}/{nb}',
+                'align' => 'R',
+                'render-as' => 'form',
+            ),
         ),
 
         'body' => array(
