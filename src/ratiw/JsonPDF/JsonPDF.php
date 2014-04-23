@@ -1,5 +1,8 @@
 <?php namespace ratiw\JsonPDF;
 
+//Scale factor
+define('_MPDFK', (72/25.4));
+
 class JsonPDF extends Fpdf
 {
     protected $settings     = null;
@@ -344,7 +347,14 @@ class JsonPDF extends Fpdf
 
         $style = isset($obj->style) ? strtoupper($obj->style) : 'D';
 
-        $this->Rect($obj->x, $obj->y, $obj->width, $obj->height, $style);
+        $radius = isset($obj->radius) ? $obj->radius : false;
+
+        if ($radius) {
+            $this->RoundedRect($obj->x, $obj->y, $obj->width, $obj->height, $radius, $style);
+        }
+        else {
+            $this->Rect($obj->x, $obj->y, $obj->width, $obj->height, $style);
+        }
     }
 
     public function renderImage($obj)
@@ -530,6 +540,46 @@ class JsonPDF extends Fpdf
         $this->resetDrawing();
         isset($this->settings->{'auto-pagebreak-margin'}) and $this->SetY(-$this->settings->{'auto-pagebreak-margin'});
         $this->renderSection($this->footer);
+    }
+
+    // from mPDF
+    function RoundedRect($x, $y, $w, $h, $r, $style = '')
+    {
+        $hp = $this->h;
+        if($style=='F')
+            $op='f';
+        elseif($style=='FD' or $style=='DF')
+            $op='B';
+        else
+            $op='S';
+        $MyArc = 4/3 * (sqrt(2) - 1);
+        $this->_out(sprintf('%.3F %.3F m',($x+$r)*_MPDFK,($hp-$y)*_MPDFK ));
+        $xc = $x+$w-$r ;
+        $yc = $y+$r;
+        $this->_out(sprintf('%.3F %.3F l', $xc*_MPDFK,($hp-$y)*_MPDFK ));
+
+        $this->_Arc($xc + $r*$MyArc, $yc - $r, $xc + $r, $yc - $r*$MyArc, $xc + $r, $yc);
+        $xc = $x+$w-$r ;
+        $yc = $y+$h-$r;
+        $this->_out(sprintf('%.3F %.3F l',($x+$w)*_MPDFK,($hp-$yc)*_MPDFK));
+        $this->_Arc($xc + $r, $yc + $r*$MyArc, $xc + $r*$MyArc, $yc + $r, $xc, $yc + $r);
+        $xc = $x+$r ;
+        $yc = $y+$h-$r;
+        $this->_out(sprintf('%.3F %.3F l',$xc*_MPDFK,($hp-($y+$h))*_MPDFK));
+        $this->_Arc($xc - $r*$MyArc, $yc + $r, $xc - $r, $yc + $r*$MyArc, $xc - $r, $yc);
+        $xc = $x+$r ;
+        $yc = $y+$r;
+        $this->_out(sprintf('%.3F %.3F l',($x)*_MPDFK,($hp-$yc)*_MPDFK ));
+        $this->_Arc($xc - $r, $yc - $r*$MyArc, $xc - $r*$MyArc, $yc - $r, $xc, $yc - $r);
+        $this->_out($op);
+    }
+
+    // from mPDF
+    function _Arc($x1, $y1, $x2, $y2, $x3, $y3)
+    {
+        $h = $this->h;
+        $this->_out(sprintf('%.3F %.3F %.3F %.3F %.3F %.3F c ', $x1*_MPDFK, ($h-$y1)*_MPDFK,
+                            $x2*_MPDFK, ($h-$y2)*_MPDFK, $x3*_MPDFK, ($h-$y3)*_MPDFK));
     }
 
     function AcceptPageBreak()
