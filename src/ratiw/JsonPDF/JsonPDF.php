@@ -288,13 +288,8 @@ class JsonPDF extends Fpdf
 
         // bind data variables
         $text = isset($obj->text) ? $this->bindVars($obj->text) : '';
-
         // convert text from utf8
-        $utf8 = isset($this->settings->utf8) ? $this->settings->utf8 : true;
-        if ($utf8)
-        {
-            $text = ($text == '') ? '' : iconv('UTF-8', 'ISO-8859-11', $text);
-        }
+        $text = $this->encodeText($text);
 
         // width & height
         $width  = isset($obj->width) ? $obj->width : 0;
@@ -429,10 +424,11 @@ class JsonPDF extends Fpdf
         {
             $col = $columns[$i];
             $colWidth = isset($col->width) ? $col->width : 20;
+            $text = isset($col->title) && $drawText ? $col->title : ucfirst($col->name);
             $this->Cell(
                 $colWidth,
                 $lineHeight,
-                isset($col->title) && $drawText ? $col->title : ucfirst($col->name),
+                $this->encodeText($text),
                 $border,
                 0,
                 isset($col->{'title-align'}) ? $col->{'title-align'} : 'C',
@@ -440,6 +436,17 @@ class JsonPDF extends Fpdf
             );
         }
         $this->Ln();
+    }
+
+    public function encodeText($text)
+    {
+        // convert text from utf8
+        if ($this->settings->utf8)
+        {
+            $text = ($text == '') ? '' : iconv('UTF-8', 'ISO-8859-11', $text);
+        }
+
+        return $text;
     }
 
     public function setTableStyle($style)
@@ -504,7 +511,7 @@ class JsonPDF extends Fpdf
                 $this->Cell(
                     $colWidth,
                     $lineHeight,
-                    $text,
+                    $this->encodeText($text),
                     $border,
                     0,
                     isset($col->{'data-align'}) ? $col->{'data-align'} : 'L',
