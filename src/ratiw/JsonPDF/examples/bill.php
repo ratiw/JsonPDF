@@ -7,7 +7,7 @@ require "../JsonPDF.php";
 // and comment out the above require statements.
 //require 'vendor/autoload.php';
 
-    $footer_start = 212;
+    $footer_start = 212.2;
     $footer_row = $footer_start;
 
     $signature_row = 250;
@@ -688,7 +688,7 @@ require "../JsonPDF.php";
                 'name' => 'THSarabun',
                 'size' => 30,
             ),
-            'header-height' => 93,
+            'header-height' => 93.2,
             'auto-pagebreak' => true,
             'auto-pagebreak-margin' => 82,
         ),
