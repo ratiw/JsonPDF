@@ -90,6 +90,7 @@ require "../JsonPDF.php";
                 'x' => 10, 'y' => 42,
                 'width' => 110,
                 'height' => 40,
+                'radius' => 2,
                 'render-as' => 'form',
             ),
             array(
@@ -97,6 +98,7 @@ require "../JsonPDF.php";
                 'x' => 122, 'y' => 42,
                 'width' => 78,
                 'height' => 40,
+                'radius' => 2,
                 'render-as' => 'form',
             ),
             array(
