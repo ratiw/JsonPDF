@@ -91,6 +91,7 @@ require "../JsonPDF.php";
                 'width' => 110,
                 'height' => 40,
                 'radius' => 2,
+                'draw-color' => '0,0,0',
                 'render-as' => 'form',
             ),
             array(
