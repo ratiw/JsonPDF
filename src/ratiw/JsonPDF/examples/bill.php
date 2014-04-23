@@ -7,6 +7,11 @@ require "../JsonPDF.php";
 // and comment out the above require statements.
 //require 'vendor/autoload.php';
 
+    $footer_start = 212;
+    $footer_row = $footer_start;
+
+    $signature_row = 250;
+
     $document = array(
         'header' => array(
             array(
@@ -322,65 +327,241 @@ require "../JsonPDF.php";
                     )
                 )
             ),
+        ),
+        'footer' => array(
             // rect: baht_text
             array(
                 'type' => 'rect',
-                'x' => 10, 'y' => 177,
+                'x' => 10, 'y' => $footer_row,
                 'width' => 110,
                 'height' => 10,
                 'render-as' => 'form',
             ),
+            array(
+                'type' => 'text',
+                'text' => '{baht_text}',
+                'font-size' => 12,
+                'x' => 11,
+                'y' => $footer_row+5,
+                'render-as' => 'data',
+            ),
             // rect: total
             array(
                 'type' => 'rect',
-                'x' => 120, 'y' => 177,
+                'x' => 120, 'y' => $footer_row,
                 'width' => 50,
                 'height' => 10,
+                'render-as' => 'form',
+            ),
+            array(
+                'type' => 'text',
+                'text' => 'รวมเงิน',
+                'font-size' => 12,
+                'x' => 121,
+                'y' => $footer_row+5,
                 'render-as' => 'form',
             ),
             // rect: {total}
             array(
                 'type' => 'rect',
-                'x' => 170, 'y' => 177,
+                'x' => 170, 'y' => $footer_row,
                 'width' => 30,
                 'height' => 10,
                 'render-as' => 'form',
+            ),
+            array(
+                'type' => 'text',
+                'text' => '{total}',
+                'font-size' => 12,
+                'x' => 171,
+                'y' => $footer_row+5,
+                'width' => 29,
+                'align'  => 'R',
+                'render-as' => 'data',
             ),
             // rect: vat
             array(
                 'type' => 'rect',
-                'x' => 120, 'y' => 187,
+                'x' => 120, 'y' => ($footer_row += 10),
                 'width' => 50,
                 'height' => 10,
                 'render-as' => 'form',
+            ),
+            array(
+                'type' => 'text',
+                'text' => 'ภาษีมูลค่าเพิ่ม',
+                'font-size' => 12,
+                'x' => 121,
+                'y' => $footer_row+5,
+                'render-as' => 'form',
+            ),
+            array(
+                'type' => 'text',
+                'text' => '{vat_rate}',
+                'font-size' => 12,
+                'x' => 150,
+                'y' => $footer_row+5,
+                'width' => 20,
+                'align'  => 'R',
+                'render-as' => 'data',
             ),
             // rect: {vat}
             array(
                 'type' => 'rect',
-                'x' => 170, 'y' => 187,
+                'x' => 170, 'y' => $footer_row,
                 'width' => 30,
                 'height' => 10,
                 'render-as' => 'form',
             ),
+            array(
+                'type' => 'text',
+                'text' => '{vat_amount}',
+                'font-size' => 12,
+                'x' => 171,
+                'y' => $footer_row+5,
+                'width' => 29,
+                'align'  => 'R',
+                'render-as' => 'data',
+            ),
             // rect: net_total
             array(
                 'type' => 'rect',
-                'x' => 120, 'y' => 197,
+                'x' => 120, 'y' => ($footer_row += 10),
                 'width' => 50,
                 'height' => 10,
+                'render-as' => 'form',
+            ),
+            array(
+                'type' => 'text',
+                'text' => 'ยอดเงินสุทธิ',
+                'font-size' => 12,
+                'x' => 121,
+                'y' => $footer_row+5,
                 'render-as' => 'form',
             ),
             // rect: {net_total}
             array(
                 'type' => 'rect',
-                'x' => 170, 'y' => 197,
+                'x' => 170, 'y' => $footer_row,
                 'width' => 30,
                 'height' => 10,
                 'render-as' => 'form',
             ),
+            array(
+                'type' => 'text',
+                'text' => '{net_total}',
+                'font-size' => 12,
+                'x' => 171,
+                'y' => $footer_row+5,
+                'width' => 29,
+                'align' => 'R',
+                'render-as' => 'data',
+            ),
 
-        ),
-        'footer' => array(
+            // ----------- remark ------------
+            array(
+                'type' => 'text',
+                'text' => 'Remark: แพนงเชิญเซฟตี้นายแบบแฮนด์ ฮาลาลม็อบแหวว อพาร์ทเมนต์จ๊อกกี้ดีพาร์ตเมนต์แหม็บ ล้มเหลวโหงวเฮ้ง ว้าวสันทนาการหม่านโถว แชมเปญเอ็นทรานซ์เซฟตี้อินดอร์ พาสตาฮิปฮอป แมมโบ้แพนงเชิญฮิต ไคลแม็กซ์วิภัชภาค ซูม แทกติครีไทร์หน่อมแน้มรัม ท็อปบู๊ท ซาตานเที่ยงคืนไฮกุไฟแนนซ์เสือโคร่ง คาร์โคโยตีบุ๋นฮัลโหล แมกกาซีนก๊วนแฟร์',
+                'multiline' => true,
+                'font-size' => 12,
+                'x' => 10,
+                'y' => $footer_start+13,
+                'width' => 110,
+                'height' => 4,
+                'align' => 'L',
+                'render-as' => 'data',
+            ),
+
+            // ----------- signature boxes ------------
+            // box 1
+            array(
+                'type' => 'rect',
+                'x' => 10, 'y' => $signature_row,
+                'width' => 62,
+                'height' => 30,
+                'radius' => 2,
+                'render-as' => 'form',
+            ),
+            array(
+                'type' => 'line',
+                'x1' => 12, 'y1' => $signature_row+22,
+                'x2' => 70, 'y2' => $signature_row+22,
+                'draw-color' => '100',  // gray scale
+                'render-as' => 'form',
+            ),
+            array(
+                'type' => 'text',
+                'text' => 'ผู้รับสินค้า',
+                'font-size' => 10,
+                'x' => 12,
+                'y' => $signature_row+26,
+                'width' => 58,
+                'align' => 'C',
+                'render-as' => 'form',
+            ),
+            // box 2
+            array(
+                'type' => 'rect',
+                'x' => 74, 'y' => $signature_row,
+                'width' => 62,
+                'height' => 30,
+                'radius' => 2,
+                'render-as' => 'form',
+            ),
+            array(
+                'type' => 'line',
+                'x1' => 76, 'y1' => $signature_row+22,
+                'x2' => 134, 'y2' => $signature_row+22,
+                'draw-color' => '100',  // gray scale
+                'render-as' => 'form',
+            ),
+            array(
+                'type' => 'text',
+                'text' => 'ผู้ส่งสินค้า',
+                'font-size' => 10,
+                'x' => 76,
+                'y' => $signature_row+26,
+                'width' => 58,
+                'align' => 'C',
+                'render-as' => 'form',
+            ),
+            // box 3
+            array(
+                'type' => 'rect',
+                'x' => 138, 'y' => $signature_row,
+                'width' => 62,
+                'height' => 30,
+                'radius' => 2,
+                'render-as' => 'form',
+            ),
+            array(
+                'type' => 'text',
+                'text' => 'ในนาม หจก.สระบุรียูเนี่ยน',
+                'font-size' => 10,
+                'x' => 140,
+                'y' => $signature_row+3,
+                'width' => 58,
+                'align' => 'C',
+                'render-as' => 'form',
+            ),
+            array(
+                'type' => 'line',
+                'x1' => 140, 'y1' => $signature_row+22,
+                'x2' => 198, 'y2' => $signature_row+22,
+                'draw-color' => '100',  // gray scale
+                'render-as' => 'form',
+            ),
+            array(
+                'type' => 'text',
+                'text' => 'ผู้มีอำนาจลงนาม',
+                'font-size' => 10,
+                'x' => 140,
+                'y' => $signature_row+26,
+                'width' => 58,
+                'align' => 'C',
+                'render-as' => 'form',
+            ),
+            // page number
             array(
                 'type' => 'text',
                 'y' => -15,
@@ -393,6 +574,20 @@ require "../JsonPDF.php";
                 'text' => 'Page {page}/{nb}',
                 'border' => 'T',
                 'align' => 'C',
+                'render-as' => 'form',
+            ),
+            // page number at header
+            array(
+                'type' => 'text',
+                'x' => -25,
+                'y' => 25,
+                'width' => 0,
+                'height' => 10,
+                'font-size'  => 8,
+                'draw-color' => '0,0,0',
+                // 'border' => 'LTRB',
+                'text' => 'Page {page}/{nb}',
+                // 'align' => 'R',
                 'render-as' => 'form',
             ),
         ),
@@ -494,6 +689,8 @@ require "../JsonPDF.php";
                 'size' => 30,
             ),
             'header-height' => 93,
+            'auto-pagebreak' => true,
+            'auto-pagebreak-margin' => 82,
         ),
 
         'fonts' => array(
@@ -525,6 +722,45 @@ require "../JsonPDF.php";
         'duedate' => '17/08/56',
         'delivery' => 'บขส.',
         'bill_items' => array(
+            // 12 items
+            array('item_code' => 'ประเทศไทย', 'item_desc' => 'กรุงเทพฯ', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            // 12 items
+            array('item_code' => 'ประเทศไทย', 'item_desc' => 'กรุงเทพฯ', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            // 12 items
+            array('item_code' => 'ประเทศไทย', 'item_desc' => 'กรุงเทพฯ', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
+            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
             // 12 items
             array('item_code' => 'ประเทศไทย', 'item_desc' => 'กรุงเทพฯ', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
             array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
