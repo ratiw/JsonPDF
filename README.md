@@ -187,6 +187,8 @@ __properties__
 
 - `width`
 - `height`
+- `radius` _(optional)_
+    If provided, will draw a rounded rectangle.
 - `style` _(optional)_
 
 
