@@ -25,6 +25,8 @@ class JsonPDF extends Fpdf
 
     public function make($document, $data = null, $renderWhat = self::RENDER_ALL)
     {
+        $document = json_decode($document);
+        $data = json_decode($data);
         $this->renderWhat = $renderWhat;
 
         isset($document->settings) and $this->init($document->settings);
@@ -40,11 +42,6 @@ class JsonPDF extends Fpdf
         isset($document->body) and $this->renderSection($document->body);
 
         return $this;
-    }
-
-    public function makeFromJson($document, $data = null, $renderWhat = self::RENDER_ALL)
-    {
-        return $this->make(json_decode($document), json_decode($data), $renderWhat);
     }
 
     public function init($settings)
