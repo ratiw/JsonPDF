@@ -497,10 +497,10 @@ class JsonPDF extends Fpdf
 
         $totalWidth = 0;
 
-        $maxRows = isset($table->{'max-rows'}) ? $table->{'max-rows'} : 0;
-        $maxRows = ($maxRows > 0) ? $maxRows : count($data);
+        $numRows = isset($table->{'rows-per-page'}) ? $table->{'rows-per-page'} : 0;
+        $numRows = ($numRows > 0) ? $numRows * (ceil(count($data) / $numRows)) : count($data);
 
-        for ($r=0; $r<$maxRows; $r++)
+        for ($r=0; $r<$numRows; $r++)
         {
             $row = ($r < count($data)) ? $data[$r] : array();
             for ($c=0; $c<count($columns); $c++)
@@ -526,7 +526,7 @@ class JsonPDF extends Fpdf
             $this->Ln();
             $filled = $striped ? !$filled : $filled;
         }
-        $this->Cell($totalWidth, 0, '', 'T');
+        // $this->Cell($totalWidth, 0, '', 'T');
     }
 
     public function render($name = '', $dest = '')
@@ -587,6 +587,11 @@ class JsonPDF extends Fpdf
         $h = $this->h;
         $this->_out(sprintf('%.3F %.3F %.3F %.3F %.3F %.3F c ', $x1*_MPDFK, ($h-$y1)*_MPDFK,
                             $x2*_MPDFK, ($h-$y2)*_MPDFK, $x3*_MPDFK, ($h-$y3)*_MPDFK));
+    }
+
+    function getPageCount()
+    {
+        return count($this->pages);
     }
 
     function AcceptPageBreak()

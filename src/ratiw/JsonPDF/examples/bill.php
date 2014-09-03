@@ -469,7 +469,7 @@ require "../JsonPDF.php";
                 'width' => 110,
                 'height' => 4,
                 'align' => 'L',
-                'render-as' => 'data',
+                'render-as' => 'form',
             ),
 
             // ----------- signature boxes ------------
@@ -614,6 +614,7 @@ require "../JsonPDF.php";
 
         'tables' => array(
             'items_table' => array(
+                'rows-per-page' => 17,
                 'columns' => array(
                     array(
                         'name' => 'item_code',
@@ -722,32 +723,6 @@ require "../JsonPDF.php";
         'duedate' => '17/08/56',
         'delivery' => 'บขส.',
         'bill_items' => array(
-            // 12 items
-            array('item_code' => 'ประเทศไทย', 'item_desc' => 'กรุงเทพฯ', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            // 12 items
-            array('item_code' => 'ประเทศไทย', 'item_desc' => 'กรุงเทพฯ', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
-            array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
             // 12 items
             array('item_code' => 'ประเทศไทย', 'item_desc' => 'กรุงเทพฯ', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
             array('item_code' => 'Austria', 'item_desc' => 'Vienna', 'item_qty' => '83,859', 'item_price' => '8,075', 'item_disc' => '', 'item_amount' => '3,750.00'),
