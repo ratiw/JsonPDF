@@ -295,6 +295,8 @@ Variables are usually embedded in the `text` property of the `Text` object.
 ##Tables Definition
 You can define tables structure in this section. Each table definition consists of 3 properties: `columns`, `data`, and `style`.
 
+`rows-per-page` property (_optional_) specifies the number of rows to be displayed per page. Blank rows will be displayed if necessary.
+
 `columns` property defines each column characteristic for the given table. See Table Column below.
 
 `data` property specifies which _key_ in the `data` section should be used for data rendering inside the given table.
@@ -304,7 +306,7 @@ You can define tables structure in this section. Each table definition consists 
 
     "tables": [
         ["world_info_table": {
-            // "max-rows": 10,
+            "rows-per-page": 10,
             "columns": [
                 {
                     "name": "country",
