@@ -19,7 +19,7 @@ Just add the requirement to you `composer.json` file.
         require "vendor/autoload.php";
 
         // This part usually comes from file or http request
-        $data = array(
+        $document = array(
             'body' => array(
                 array(
                     'type' => 'text',
@@ -39,9 +39,9 @@ Just add the requirement to you `composer.json` file.
 
         // The main code is here
         $pdf = new ratiw\JsonPDF\JsonPDF('P', 'mm', 'A4');
-        $pdf->make(json_encode($data), 'both');
-        // $pdf->make(json_encode($data), 'form');
-        // $pdf->make(json_encode($data), 'data');
+        $pdf->make(json_encode($document), json_encode($data = array()), 'both');
+        // $pdf->make(json_encode($document), json_encode($data = array()), 'form');
+        // $pdf->make(json_encode($document), json_encode($data = array()), 'data');
         $pdf->render();
     ?>
 
@@ -130,6 +130,13 @@ __properties__
 
 - `render-as` _(optional)_
     specify whether this object should be render as part of the `form` or as `data`.
+
+###Render-as Property
+JsonPDF can be rendered in three different mode. Render only those objects marked as `form` (`RENDER_FORM_ONLY`), render only those objects marked as `data` (`RENDER_DATA_ONLY`), or render both `form` and `data` ('RENDER_ALL`).
+
+The rendered document can be shown as a blank form (`RENDER_FORM_ONLY`), or can be shown raw data (`RENDER_DATA_ONLY`) to printed on the pre-made paper form, or can be shown both (`RENDER_ALL`) to be printed on plain paper.
+
+By default if the `render-as` property of the object is not defined, the object will be regarded as `RENDER_ALL`. That means it will get rendered both as part of a `form` and a `data`. 
 
 
 ###Text Object
