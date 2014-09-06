@@ -128,6 +128,8 @@ __properties__
 - `line-width` _(optional)_
     line width. If omitted, the default value (0.2mm as specified in the [FPDF document](http://www.fpdf.org/en/doc/setlinewidth.htm)) will be used.
 
+- `render-as` _(optional)_
+    specify whether this object should be render as part of the `form` or as `data`.
 
 
 ###Text Object
