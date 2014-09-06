@@ -32,16 +32,20 @@ Just add the requirement to you `composer.json` file.
                 ),
                 array(
                     'type' => 'text',
-                    'text' => 'Hi, there!',
+                    'text' => 'Hi, {name}!',
                 ),
             ),
+        );
+        
+        $data = array(
+            'name' => 'Rati'
         );
 
         // The main code is here
         $pdf = new ratiw\JsonPDF\JsonPDF('P', 'mm', 'A4');
-        $pdf->make(json_encode($document), json_encode($data = array()), 'both');
-        // $pdf->make(json_encode($document), json_encode($data = array()), 'form');
-        // $pdf->make(json_encode($document), json_encode($data = array()), 'data');
+        $pdf->make(json_encode($document), json_encode($data), 'both');
+        // $pdf->make(json_encode($document), json_encode($data), 'form');
+        // $pdf->make(json_encode($document), json_encode($data), 'data');
         $pdf->render();
     ?>
 
