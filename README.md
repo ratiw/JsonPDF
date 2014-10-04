@@ -7,7 +7,7 @@ Just add the requirement to you `composer.json` file.
 
     {
         "require": {
-            "ratiw/jsonpdf": "dev-master"
+            "ratiw/jsonpdf": "~1.0"
         }
     }
 
