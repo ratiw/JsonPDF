@@ -2,7 +2,8 @@
 __JsonPDF__ is a wrapper class for [FPDF](http://www.fpdf.org) to allow creating PDF document from [JSON](http://en.wikipedia.org/wiki/JSON) data.
 
 
-##Install using Composer
+## Install using Composer
+
 Just add the requirement to you `composer.json` file.
 
     {
@@ -13,7 +14,8 @@ Just add the requirement to you `composer.json` file.
 
 
 ----
-##Example
+
+## Example
 
     <?php
         require "vendor/autoload.php";
@@ -52,7 +54,8 @@ Just add the requirement to you `composer.json` file.
 See more examples in the `examples` direcoty.
 
 ----
-##JSON data structure
+
+## JSON data structure
 
 
     {
@@ -86,7 +89,8 @@ __fonts__     | List of fonts to be added before rendering the PDF document. The
 __data__      | Array of data to be binded to the text object while rendering the PDF document.
 __tables__    | Defines each table properties. These table will be reference by `table`, `table-header`, `table-body` objects.
 
-##Objects
+## Objects
+
 There are 5 object types in JsonPDF. Each doing a specific task to render PDF document.
 
 Every objects share some common properties like the draw color, fill color (background color), x-y position, etc.
@@ -100,7 +104,8 @@ The following object types are available:
 - table
 
 
-###Common Object Properties
+### Common Object Properties
+
 The following properties are common to all objects, which mean they can be set on any object. They may or may not affect the rendering of the object depending on whether that object uses that property or not.
 
 __properties__
@@ -135,7 +140,8 @@ __properties__
 - `render-as` _(optional)_
     specify whether this object should be render as part of the `form` or as `data`.
 
-###Render-as Property
+### `render-as` Property
+
 JsonPDF can be rendered in three different mode. Render only those objects marked as `form` (`RENDER_FORM_ONLY`), render only those objects marked as `data` (`RENDER_DATA_ONLY`), or render both `form` and `data` ('RENDER_ALL`).
 
 The rendered document can be shown as a blank form (`RENDER_FORM_ONLY`), or can be shown raw data (`RENDER_DATA_ONLY`) to printed on the pre-made paper form, or can be shown both (`RENDER_ALL`) to be printed on plain paper.
@@ -143,7 +149,8 @@ The rendered document can be shown as a blank form (`RENDER_FORM_ONLY`), or can 
 By default if the `render-as` property of the object is not defined, the object will be regarded as `RENDER_ALL`. That means it will get rendered both as part of a `form` and a `data`. 
 
 
-###Text Object
+### Text Object
+
 The `text` object uses to display text at the specified position. Data can be bound to the `text` object by enclosing the data name in curly braces `{}` embedding in the _text_ property of the `text` object.
 
 The following example shows the `username` data embedded in the text property. This `username` will be replaced by the actual data provided in the `data` section of the JSON.
@@ -161,7 +168,7 @@ The following example shows the `username` data embedded in the text property. T
         "username": "Rati"
     ]
 
-####Additional properties
+#### Additional properties
 
 - `align` _(optional)_
 
@@ -178,7 +185,8 @@ The following example shows the `username` data embedded in the text property. T
 - `multiline` _(optional)_
 
 
-###Line Object
+### Line Object
+
 The `line` object uses to draw a line at the given position specified by `x1`, `y1`, `x2`, `y2`.
 
 __properties__
@@ -191,6 +199,7 @@ __properties__
 
 
 ### Rect Object
+
 The `rect` object uses to draw a rectangle on the document using the specified `x`, `y`, `width`, `height` properties.
 
 __properties__
@@ -206,6 +215,7 @@ __properties__
 
 
 ### Image Object
+
 The `image` object uses to draw the given image on the document at the speicifed location, `width` and `height`.
 
 __properties__
@@ -218,6 +228,7 @@ __properties__
 
 
 ### Table, Table Header, Table Body Objects
+
 The `table` object is used to draw a data table on the document. The table properties must be defined in the `tables` section and the data must be present in the `data` section of the JSON.
 
 `table` object will render the complete table with the table header and body.
@@ -233,7 +244,9 @@ __properties__
 
 
 ----
-##Settings
+
+## Settings
+
 This section is used to set various properties for the PDF document.
 
     "settings": {
@@ -264,7 +277,9 @@ __properties__
 
 
 ----
-##Defining Fonts
+
+## Defining Fonts
+
 You can add custom fonts to be used in your PDF document in this section by providing the array of `fontname`, `fontstyle`, and `fontfile`.
 
 In order to use your own custom fonts, you must creating the `fontfile` using FPDF's MakeFont function.
@@ -280,7 +295,9 @@ See more information on this at [FPDF website](http://www.fpdf.org/en/tutorial/t
 
 
 ----
-##Data Binding
+
+## Data Binding
+
 You define data for the variables in this `data` section. Variable name is enclosed in the curly braces, e.g. `{name}`.
 
 Variables are usually embedded in the `text` property of the `Text` object.
@@ -305,7 +322,9 @@ Variables are usually embedded in the `text` property of the `Text` object.
     }
 
 ----
-##Tables Definition
+
+## Tables Definition
+
 You can define tables structure in this section. Each table definition consists of 3 properties: `columns`, `data`, and `style`.
 
 `rows-per-page` property (_optional_) specifies the number of rows to be displayed per page. Blank rows will be displayed if necessary.
@@ -415,7 +434,8 @@ The table `style` property allow the user to define how the table should looks.
     - `font-size`
 
 ----
-##Utility functions
+
+## Utility functions
 
  - `snakeToCamel`
  - `deepMerge` or `deep_merge`
